@@ -8,7 +8,7 @@
            float = 4字节；
            double = 8字节；
            char = 2字节；
-           boolean = 未定义；
+           boolean = 1字节；
     2：命令提示符快捷键：Win+R   键入cmd;
            常用命令：cd = 打开；
                      tab = 补全；
