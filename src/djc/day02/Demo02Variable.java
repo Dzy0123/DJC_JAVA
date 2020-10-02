@@ -1,7 +1,7 @@
 package djc.day02;
 
 public class Demo02Variable { //变量
-    public static void main(String [] args){
+    public static void main(String[] args) {
         int num1; //创建一个变量
         num1 = 3; //给变量赋值
         System.out.println(num1); //打印输出变量内容

@@ -1,8 +1,8 @@
 package djc.day02;
 
 public class Demo01Const { //常量
-    public static void main(String[] args){
-       //字符串常量
+    public static void main(String[] args) {
+        //字符串常量
         System.out.println("ABC");
         System.out.println(""); // 字符串两个双引号之间的内容为空
         System.out.println("CDF");
