@@ -12,6 +12,7 @@ public class DemoMathTest {
         int num = 0;
         for (int i = (int)min; i < max; i++) { //变量i就是区间之内所有的整数
             if(Math.abs(i) > 6 || Math.abs(i) < 2.1){
+                System.out.println("在-10.8到5.9之间，绝对值大于6或者小于2.1的整数为："+i);
                 num++;
             }
         }
