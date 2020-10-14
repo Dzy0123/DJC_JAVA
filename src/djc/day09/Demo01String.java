@@ -14,6 +14,11 @@ public class Demo01String { //字符串
         System.out.println(str2); //abc
         System.out.println("==============");
 
+        char[] charArray2 = {'a', 'b', 'c'};
+        String str7 = new String(charArray2);
+        System.out.println(str7); //abc
+        System.out.println("==============");
+
         //根据字节数组进行创建字符串
         byte[] byteArray = {97, 98, 99};
         String str3 = new String(byteArray);
@@ -37,5 +42,9 @@ public class Demo01String { //字符串
         System.out.println(str6 == str2); //false
         System.out.println(str5 == charArray.toString()); //false
         System.out.println("=================");
+
+        System.out.println(str2 == str7); //false
+        System.out.println(str2.equals(str7)); //true
+        System.out.println(str3.equals(str7)); //true
     }
 }

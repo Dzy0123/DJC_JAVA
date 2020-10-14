@@ -19,13 +19,13 @@
                 双引号直接写的字符串也就是直接创建的字符串保存在字符串常量池当中；
                 new的不在常量池中。
         5：字符串比较相关方法：
-            public boolean equals(Object obj)：
+            public boolean equals(Object obj)： //String类对equals方法默认进行了重写覆盖比较的是属性
                 参数可以是任何对象，只有参数是一个字符串并且内容相同的才会给一个true;
                 否则返回false。
             注意：
                 任何对象都能用Object进行接收；
                 equals方法具有对称性，也就是a.equals(b)和b.equals(a)效果一样；
-                如果比较双方一个常量一个变量，推荐吧常量字符串写在前面。
+                如果比较双方一个常量一个变量，推荐把常量字符串写在前面。
             public boolean equalsIgnoreCase(String str)：
                 忽略大小写，进行内容的比较。
         6：字符串获取相关方法：
