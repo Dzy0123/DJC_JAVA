@@ -13,7 +13,7 @@ public class NormalMode implements OpenMode { //平均分红包
         int mod = totalMoney % totalCount; //余数（零头）
 
         //totalCount-1代表最后一个余数先留着
-        for (int i = 0; i < totalCount-1; i++) {
+        for (int i = 0; i < totalCount - 1; i++) {
             list.add(avg);
         }
 

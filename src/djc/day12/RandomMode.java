@@ -23,9 +23,9 @@ public class RandomMode implements OpenMode {
         int leftMoney = totalMoney; //剩下金额
         int leftCount = totalCount; //剩下份数
 
-        for (int i = 0; i < totalCount-1; i++) {
+        for (int i = 0; i < totalCount - 1; i++) {
             //随机发钱n-1个
-            int money = r.nextInt(leftMoney / leftCount)+1;
+            int money = r.nextInt(leftMoney / leftCount) + 1;
             list.add(money); //将第一个随机红包放入集合
             leftMoney -= money; //剩下金额越发越少
             leftCount--; //剩下份数递减
