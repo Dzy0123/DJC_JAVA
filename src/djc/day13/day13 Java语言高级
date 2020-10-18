@@ -1,0 +1,183 @@
+常用API第二部分
+    3.1 Object类
+        1：概念：
+            Object类是类层次结构的根类。
+            每个类都使用Object作为超类、所有对象（包括数组）都实现这个类的方法。
+        2：toString方法：
+            类默认继承了Object类，所以可以使用Object类中的toString方法；
+            直接打印对象的名字，其实就是调用对象的toString方法，打印的是地址值；
+            如果想要打印对象的属性则要重写toString方法。
+        3：equals方法：
+            类默认继承了Object类，所以可以使用Object类中的equals方法；
+            boolean equals(Object obj)指示其它某个对象是否与此对象“相等”；
+            equals方法源码：
+                public boolean equals(Object obj){
+                    return (this == obj);
+                }
+            ==比较运算符，返回的是一个布尔值 true/false
+                基本数据类型：比较值
+                引用数据类型：比较地址值
+            Object类的equals方法默认的是比较两个对象的地址值，没有意义；
+            如果想要比较两个对象的属性，则要重写equals方法，向下转型。
+            注意：
+                String类的equals法进行了默认重写覆盖，比较的是属性值。
+        4：Objects工具类：
+            概念：
+                此工具类提供了一些方法来操作对象，由一些静态的实用方法组成；
+                这些方法是null-save（空指针安全的）或null-tolerant（容忍空指针异常的）；
+                用于计算对象的hashcode、返回对象的字符串标识形象、比较两个对象。
+            用法：
+                在比较两个对象的时候，Object的equals方法容易抛出空指针异常；
+                而Objects类中的equals方法就有花了这个问题。
+            格式：
+                public static boolean equals(Object a , Object a):判断两个对象是否相等
+            源码：
+                public static boolean equals(Object a , Object a){
+                    return(a == b) || (a != null && a.equals(b));
+                }
+    3.2 Date类
+        1：Date类：
+            概述：java.util.Date类表示特定的瞬间，精确到毫秒。
+            毫秒值的作用：可以对时间和日期进行计算。
+            格式：
+                public Date()：
+                    分配Date对象并初始化此对象，以表示分配它的时间(精确到毫秒)。
+                public Date(long date)：
+                    分配Date对象并初始化此对象，以表示自从标准基准时间
+                    (称为“历元(epoch)”，即1970年1月1日00:00:00 GMT)以来的指定毫秒数。
+                long.getTime()：相当于System.currentTimeMillis()方法。把日期转换为毫秒值。
+            注意：
+                中国属于东八区，时间原点会增加八小时。
+        2：DateFormat类：
+            概述：java.util.DataFormat是日期/时间格式化子类的抽象类。
+                 可以通过这个类帮我们完成日期和文本之间的转换；
+                 也就是可以在Data对象与String对象之间进行来回转换。
+                 格式化：
+                    按照指定的格式，从Data对象转换为String对象。
+                 解析：
+                    按照指定的格式，从String对象转换为Data对象。
+            成员方法：
+                String format(Data data)：
+                    按照指定的模式，把Data日期，格式化为复合模式的字符串。
+                Data parse(String source)：
+                    把符合模式的字符串解析为日期。
+            构造方法：
+                由于DateFormat为抽象类，不能直接创建对象使用;
+                所以需要常用的子类java.text.SimpleDataFormat extends DataFormat。
+                这个类需要一个模式(格式)来指定格式化或解析的标准。
+                构造方法格式：
+                    public SimpleDataFormat(String pattern)：
+                        用给定的模式和默认语言环境的日期格式符号构造SimpleDataFormat。
+                        pattern是一个字符串，代表日期时间和自定义格式。格式是区分大小写的
+                    格式：
+                        年：y
+                        月：M
+                        日：d
+                        时：H
+                        分：m
+                        秒：s
+                        "yyyy-MM-dd HH:mm:ss"，格式的字母不能改，连接符号可以改
+    3.3 Calendar类介绍
+        1：概念：
+            java.util.Calendar类是日历类；
+            Calendar类是一个抽象类，里面提供了很多操作日历字段的方法(YEAR、MONTH、DAY_OF_MONTH、HOUR)。
+        2：获取对象方式：
+            Calendar类无法直接创建对象；
+            里面有一个静态方法叫getInstance()，该方法返回了Calendar类的子对象。
+            static Calendar getInstance()使用默认时区和语言环境获得一个日历。
+        3：常用成员方法：
+            public int get(int field)：
+                返回给定日历字段的值。
+            public void set(int field, int value)：
+                将给定的日历字段设置为给定值。
+            public abstract void add(int field, int amount)：
+                根据日历的规则，为给定的日历字段添加或减去指定的时间量。
+            public Data getTime()：
+                返回一个表示此Calendar时间值（从历元到现在的毫秒偏移量）的Data对象。
+                注意：日历对象Calendar转换为日期对象Date时，月份会加一
+            常用字段值：
+                YEAR：年
+                MONTH：月
+                Data/DAY_OF_MONTH：月中的天（几号）
+                HOUR：时
+                MINUTE：分
+                SECOND：秒
+    3.4 System类
+        1：概念：
+            java.util.System类中提供了大量静态方法，可以获取与系统相关的信息或系统级操作。
+        2：常用方法：
+            public static long currentTimeMillis()：
+                返回以毫秒为单位的当前时间。
+            public static void arraycopy(Object src,int srcPos,Object dest,int destPos,int length)：
+                将数组中指定的数据拷贝到另一个数组中
+                参数：
+                    src：源数组
+                    srcPos：源数组中的起始位置
+                    dest：目标数组
+                    destPos：目标数组中的起始位置
+                    length：要复制的数组元素的数量
+    3.5 StringBuilder类
+        1：概念：
+            字符串缓冲区，可以提高字符串的操作效率（看成一个长度可以变化的字符串）；
+            底层也是一个数组，但是没有被final修饰，可以改变长度。
+            StringBuilder在内存中始终是一个数组，占用空间少，效率高；
+            如果超出了StringBuilder的容量，会自动扩容。
+        2：构造方法：
+            StringBuilder()：
+                构造一个不带任何字符的字符串生成器，其初始容量为16个字符。
+            StringBuilder(String str)：
+                构造一个字符串生成器，并初始化为指定的字符串内容。
+        3：常用成员方法：
+            public StringBuilder append(...)：
+                添加任意类型数据的字符串形式，并返回当前对象自身。
+                append成员方法返回的是this（调用方法的对象）的地址值;
+                使用append方法无需接收返回值。
+            public String toString()：
+                将当前StringBuilder对象转换为String对象。
+    3.6 基本类型包装类
+        1：概述：
+            java提供了基本类型和引用类型，使用基本类型在于效率，很多情况配合创建对象使用；
+            若想让基本类型像对象一样操作，可以使用基本类型对应的包装类。
+            基本类型        对应的包装类(位于java.lang包中)
+            byte            Byte
+            short           Short
+            int             Integer
+            long            Long
+            float           Float
+            double          Double
+            char            Character
+            boolean         Boolean
+        2：装箱与拆箱：
+            装箱：把基本类型的数据，包装到包装类中
+                构造方法(int例子)：
+                    Integer(int value)：
+                        构造一个新分配的Integer对象，它表示指定的int值。
+                    Integer(String str)：
+                        构造一个新分配的Integer对象，它表示String参数所指示的int值。
+                        传递的字符串，必须是基本类型int的字符串，否则会抛出异常。
+                静态方法：
+                    static Integer valueOf(int i)：
+                        返回一个表示指定的int值的Integer实例。
+                    Static Integer valueOf(String s)：
+                        返回保存指定的String的值的Integer对象。
+            拆箱：在包装类中取出基本类型的数据
+                成员方法：
+                    int intValue()以int类型返回该Integer的值。
+        3：自动装箱与自动拆箱：
+            从Java5开始，基本类型与包装类的装箱、拆箱动作可以自动完成
+            例如：
+                //自动装箱，相当于Integer i = Integer.valueOf(4)
+                Integer i = 4;
+                //等号右边：将i对象转成基本数值（自动拆箱）i.intValue() + 5
+                i = i + 5;
+                //加法运算完成后，再次装箱，把基本数值转成对象
+        4：基本类型与字符串类型之间的相互转换：
+            基本类型-->字符串
+                基本类型的值直接加上空字符串""（最常用）；
+                包装类的静态方法toString(参数)，不是Object类的toString()，重载关系；
+                    static String toString(int i)返回一个表示指定整数的String对象。
+                    String类的静态方法valueOf(参数)
+            字符串类型-->基本类型
+                使用包装类的静态方法parseXxx("数值类型字符串");
+                 Integer类：static int parseInt(String s)
+                 Double类：static double parseDouble(String s)
