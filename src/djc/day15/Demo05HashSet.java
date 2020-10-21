@@ -8,9 +8,9 @@ public class Demo05HashSet { //HashSet存储自定义类型元素
     public static void main(String[] args) {
         //创建Set集合存储Person
         HashSet<Person> set = new HashSet<>();
-        Person p1 = new Person("dzy",21);
-        Person p2 = new Person("dzy",21);
-        Person p3 = new Person("wll",21);
+        Person p1 = new Person("dzy", 21);
+        Person p2 = new Person("dzy", 21);
+        Person p3 = new Person("wll", 21);
         /*//重写hashCode和equals方法前
         System.out.println(p1.hashCode()); //325040804
         System.out.println(p2.hashCode()); //1173230247

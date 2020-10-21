@@ -15,7 +15,7 @@ public class Demo03Set { //Set集合
         set.add(1);
         //使用迭代器遍历集合
         Iterator<Integer> it = set.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             System.out.println(it.next()); //1 2 3不存储重复数据，不一定按照顺序
         }
         System.out.println("----------");

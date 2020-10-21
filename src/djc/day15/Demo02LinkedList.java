@@ -32,15 +32,15 @@ public class Demo02LinkedList { //List的子类
 
         //removeFirst
         String str1 = list.removeFirst();
-        System.out.println("被移除的第一个元素为："+str1); //被移除的第一个元素为：0
+        System.out.println("被移除的第一个元素为：" + str1); //被移除的第一个元素为：0
         System.out.println(list); //[1, a, b, c, d, e, end]
         //pop
         String str2 = list.pop();
-        System.out.println("被移除的第一个元素为："+str2); //被移除的第一个元素为：1
+        System.out.println("被移除的第一个元素为：" + str2); //被移除的第一个元素为：1
         System.out.println(list); //[a, b, c, d, e, end]
         //removeLast
         String str3 = list.removeLast();
-        System.out.println("被移除的最后一个元素为："+str3); //被移除的最后一个元素为：end
+        System.out.println("被移除的最后一个元素为：" + str3); //被移除的最后一个元素为：end
         System.out.println(list); //[a, b, c, d, e]
     }
 }

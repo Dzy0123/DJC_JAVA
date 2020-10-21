@@ -11,12 +11,12 @@ public class Demo07VarArgs { //可变参数
         System.out.println(sum());
         System.out.println("=============");
 
-        sum(10,20,30);
-        System.out.println(sum(10,20,30));
+        sum(10, 20, 30);
+        System.out.println(sum(10, 20, 30));
     }
 
     //定义一个方法，计算0~n个int类型整数的和
-    public static int sum(int...array){
+    public static int sum(int... array) {
         System.out.println(array);
         //定义一个初始化变量，记录累加求和
         int sum = 0;
@@ -29,7 +29,7 @@ public class Demo07VarArgs { //可变参数
     }
 
     //可变参数的特殊写法
-    public static void method(Object...obj){
+    public static void method(Object... obj) {
 
     }
 }
