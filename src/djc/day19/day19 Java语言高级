@@ -1,0 +1,85 @@
+    5.4 线程唤醒机制
+        1：线程状态概述：
+            NEW（新建状态）：
+            至今尚未启动的线程处于这种状态。
+            RUNNABLE（运行状态）：
+            正在 Java 虚拟机中执行的线程处于这种状态。
+            BLOCKED（阻塞状态）：
+            受阻塞并等待某个监视器锁的线程处于这种状态。
+            WAITING（无线等待状态）：
+            无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。
+            TIMED_WAITING（休眠状态）：
+            等待另一个线程来执行取决于指定等待时间的操作的线程处于这种状态。
+            TERMINATED（死亡状态）：
+            已退出的线程处于这种状态。
+            阻塞状态：
+                具有cpu的执行权资格，等待cpu空闲时执行；
+            休眠状态：
+                放弃cpu的执行资格，cpu空闲，也不执行；
+        2：等待线程唤醒：
+            public final void wait()throws InterruptedException：
+                在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。
+            public final void notify()：
+                唤醒在此对象监视器上等待的单个线程；
+                唤醒后会继续执行wait方法之后的代码。
+            进入TimeWaiting（计时等待）有两种方式：
+                使用sleep(long m)方法：
+                    在毫秒值结束之后线程睡醒进入到Runnable/Blocked状态；
+                使用wait(long m)方法：
+                    wait方法在毫秒值结束之后，如果还没有notify()方法唤醒，就会自动醒来，
+                    线程进入到Runnable/Blocked状态；
+            唤醒的两种方法：
+                public final void notify()：
+                    唤醒在此对象监视器上等待的单个线程
+                public final void notifyAll()：
+                    唤醒在此对象监视器上等待的所有线程。
+    5.5 线程池
+        1：线程池的概念：
+            是一个容纳多个线程的容器，其中的线程可以反复使用；
+            省去了频繁创建线程对象的操作，无需反复创建线程而消耗过多资源。
+        2：线程池的使用：
+            JDK1.5之后提供的，java.util.concurrent.Executors：
+                线程池的工厂，用来生成线程池
+            Executors类中的静态方法：
+                public static ExecutorService newFixedThreadPool(int nThreads)：
+                    创建一个可重用固定线程数的线程池，以共享的无界队列方式来运行这些线程；
+                    参数：
+                        int nThreads：创建线程池中包含的线程数量
+                    返回值：
+                        ExecutorService接口，返回的是ExecutorService接口的实现类对象；
+                        我们可以使用ExecutorService接口接收（面向接口编程）。
+            java.util.concurrent.ExecutorService：
+                线程池接口，用来从线程池中获取线程，调用start方法，执行线程任务的方法：
+                    Future<?> submit(Runnable task)：
+                        提交一个 Runnable 任务用于执行，并返回一个表示该任务的 Future。
+                关闭/销毁线程池的方法：
+                    void shutdown()
+            线程池的使用步骤：
+                使用线程池的工厂类Executors里提供的静态方法newFixedThreadPool生产一个指定数量的线程池；
+                创建一个类，实现Runnable接口，重写run方法，设置线程任务；
+                调用ExecutorService中的方法submit，传递线程任务（实现类），开启线程，执行run方法；
+                调用ExecutorService中的方法shutdown销毁线程池(不建议执行)。
+    5.6 Lambda表达式
+        1：标准格式：
+            由三部分组成：
+                一些参数；
+                一个箭头；
+                一段代码
+            格式：
+                (参数列表)->{一些重写方法的代码};
+            格式说明：
+                ()：接口中抽象方法的参数列表，没有参数就空着，有参数就写出参数，多个参数使用逗号分割；
+                ->：传递的意思，把参数传递给方法体{}；
+                {}：重写接口抽象方法的方法体。
+        2：Lambda省略格式：
+            Lambda表达式是可推导，可省略的；
+            凡是根据上下文推到出来的内容，都可以省略书写；
+            可以省略的内容：
+                (参数列表)：括号中参数列表的数据类型，可以省略不写
+                (参数列表)：括号中的参数如果只有一个，那么类型和括号都可以省略
+                {一些代码}：如果{}中的代码只有一行，无论是否有返回值，都可以省略({}、return、;)
+                    注意，要省略({}、return、;)必须一起省略。
+        3：Lambda使用前提：
+            使用Lambda必须具有接口，且要求接口中有且仅有一个抽象方法；
+            使用Lambda必须具有上下文推断：
+                也就是方法的参数或局部变量类型必须为Lambda对应的接口类型，才能使用Lambda作为该接口的实例。
