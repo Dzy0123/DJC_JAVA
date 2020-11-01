@@ -1,0 +1,281 @@
+    6.4 IO字节流
+        1：概述：
+            I：input 输入（读取）
+            O：output 输出（写入）
+            流：数据（字符、字节）1字符=2字节，1字节=8二进制位
+                        输入流         输出流
+            字节流    InputStream   OutputStream
+            字符流       Reader        Writer
+        2：字节输出流【OutputStream】
+            java.io.OutputStream，此抽象类是表示输出字节流的所有类的超类。
+            定义了一些子类共性的成员方法：
+                void close()
+                    关闭此输出流并释放与此流有关的所有系统资源。
+                void flush()
+                    刷新此输出流并强制写出所有缓冲的输出字节。
+                void write(byte[] b)
+                    将 b.length 个字节从指定的 byte 数组写入此输出流。
+                void write(byte[] b, int off, int len)
+                    将指定 byte 数组中从偏移量 off 开始的 len 个字节写入此输出流。
+                abstract  void write(int b)
+                    将指定的字节写入此输出流。
+        3：文件字节输出流：
+            java.io.FileOutputStream extends OutputStream：
+                作用：
+                    把内存中的数据写入到硬盘的文件中
+                构造方法：
+                    FileOutputStream(String name)
+                        创建一个向具有指定名称的文件中写入数据的输出文件流。
+                    FileOutputStream(File file)
+                        创建一个向指定 File 对象表示的文件中写入数据的文件输出流。
+                    参数：写入数据的目的
+                        String name：目的地是一个文件的路径
+                        File file：目的地是一个文件
+                    构造方法作用：
+                        创建一个FileOutputStream对象；
+                        会根据构造方法中传递的文件/文件路径，创建一个空的文件；
+                        会把FileOutputStream对象指向创建好的文件
+        4：写入数据的原理（内存-->硬盘）：
+            java程序-->JVM(java虚拟机)-->OS(操作系统)-->OS调用写数据的方法-->把数据写入到文件夹中
+        5：字节输出流的使用步骤（重点）：
+            创建一个FileOutputStream对象，构造方法中传递写入数据的目的地；
+            调用FileOutputStream对象中的方法write，把数据写入到文件中；
+            释放资源（流使用会占用一定内存，使用完毕要把内存清空，提高程序的效率）
+            注意：
+                写数据的时候，会把10进制的整数，转换成为二进制整数；
+                任意的文本编辑器（记事本，notepad++,...），
+                    在打开文件的时候，都会查询编码表，把字节转换为字符表示，
+                    0-127：查询ASCII表；
+                    其他值：查询系统默认码表（中文系统GBK）
+        6：字节流的续写和换行：
+            数据追加续写：
+                使用两个参数的构造方法：
+                    FileOutputStream(String name, boolean append)
+                        创建一个向具有指定 name 的文件中写入数据的输出文件流。
+                    FileOutputStream(File file, boolean append)
+                        创建一个向指定 File 对象表示的文件中写入数据的文件输出流。
+                    参数：
+                        String name：写入数据的目的地
+                        boolean append：追加写开关
+                            true：创建对象不会覆盖源文件，继续在文件末尾追加写数据；
+                            false：创建一个新文件，覆盖源文件
+                    写换行：写换行符号
+                        windows：\r\n
+                        Linux：/n
+                        mac：/r
+        7：字节输入流【InputStream】：
+            java.io.InputStream，此抽象类是表示字节输入流的所有类的超类。
+            定义了所有子类共性的方法：
+                abstract int read()
+                    从输入流中读取数据的下一个字节。
+                int read(byte[] b)
+                    从输入流中读取一定数量的字节，并将其存储在缓冲区数组 b 中。
+                void close()
+                    关闭此输入流并释放与该流关联的所有系统资源。
+        8：文件字节输入流：
+            java.io.FileInputStream extends InputStream：
+                作用：
+                    把硬盘文件中的数据读取到内存中使用。
+                构造方法：
+                    FileInputStream(String name)：
+                        通过打开一个到实际文件的连接来创建一个 FileInputStream，该文件通过文件系统中的路径名 name 指定。
+                    FileInputStream(File file)
+                        通过打开一个到实际文件的连接来创建一个 FileInputStream，该文件通过文件系统中的 File 对象 file 指定。
+                    参数：读取文件的数据源
+                        String name：文件的路径
+                        File file：文件
+                    构造方法作用：
+                        创建一个FileInputStream对象；
+                        把FileInputStream对象指向构造方法中要读取的文件。
+        9：读取数据原理（硬盘-->内存）：
+            java程序-->JVM(java虚拟机)-->OS(操作系统)-->OS调用读取数据的方法-->读取文件
+        10：字节输入流的使用步骤（重点）：
+            创建一个FileInputStream对象，构造方法中绑定要读取数据的数据源；
+            调用FileInputStream对象中的方法read，读取文件；
+            释放资源（流使用会占用一定内存，使用完毕要把内存清空，提高程序的效率）。
+        11：使用字节流读取中文的问题：
+            使用字节流读取中文文件：
+            一个中文：
+                GBK：占用2个字节
+                UTF-8：占用3个字节
+    6.5 IO字符流
+        1：字符输入流_Reader类：
+            java.io.Reader：
+                用于读取字符流的抽象类；
+                是字符输入流的最顶层的父类；
+                定义了一些共性的成员方法：
+                    int read()
+                        读取单个字符。
+                    int read(char[] cbuf)
+                        将字符读入数组。
+                    abstract void close()
+                        关闭该流并释放与之关联的所有资源。
+        2：FileReader类：
+            java.io.FileReader extends InputStreamReader extends Reader：
+                文件字符输入流，用来读取字符文件的便捷类。
+                作用：
+                    把硬盘文件中的数据以字符的方式读取到内存中
+                构造方法：
+                    FileReader(String fileName)
+                    在给定从中读取数据的文件名的情况下创建一个新 FileReader。
+                    FileReader(File file)
+                    在给定从中读取数据的 File 的情况下创建一个新 FileReader。
+                    参数：
+                        String filename：文件的路径
+                        file：文件
+                    构造方法的作用：
+                        创建一个FileReader对象；
+                        会把FileReader对象指向要读取的文件；
+                使用步骤：
+                    创建FileReader对象，在构造方法中绑定要读取的数据源；
+                    使用FileReader对象中的方法read读取文件；
+                    释放资源。
+        3：字符输出流_Writer类：
+            java.io.Writer：
+                写入字符流的抽象类。
+                是字符输入流的最顶层的父类；
+                定义了一些共性的成员方法：
+                    void write(int c)
+                        写入单个字符。
+                    void write(char[] cbuf)
+                        写入字符数组。
+                    abstract void write(char[] cbuf, int off, int len)
+                        写入字符数组的某一部分。
+                    void write(String str)
+                        写入字符串。
+                    void write(String str, int off, int len)
+                        写入字符串的某一部分。
+                    abstract void flush()
+                        刷新该流的缓冲。
+                    abstract void close()
+                        关闭此流，但要先刷新它。
+        4：FileWriter类：
+            java.io.FileWriter extends OutputStreamWriter extends Writer：
+                文件字符输出流，用来写入字符文件的便捷类。
+                作用：
+                    把内存中的字符数据写入到文件中。
+                构造方法：
+                    FileWriter(String fileName)
+                        根据给定的文件名构造一个 FileWriter 对象。
+                    FileWriter(File file)
+                        根据给定的 File 对象构造一个 FileWriter 对象。
+                    参数：
+                        String filename：文件的路径
+                        file：文件
+                    构造方法的作用：
+                        创建一个FileWriter对象；
+                        会根据构造方法中传递的文件/文件路径创建一个文件；
+                        把FileWriter对象指向创建好的文件；
+                使用步骤：
+                    创建FileWriter对象，构造方法中绑定要写入数据的目的地；
+                    使用FileWriter对象中的方法write，把数据写入到内存缓冲区中（字符转换为字节的过程）；
+                    使用FileWriter对象中的方法flush，把内存缓冲区中的数据，刷新到文件中；
+                    释放资源（先把内存缓冲区中的数据刷新到文件中）。
+                flush方法和close方法的区别：
+                    flush：刷新缓冲区，流对象可以继续使用；
+                    close：先刷新缓冲区，然后通知系统释放资源。流对象不可以再被使用了。
+            字符输出流写数据的其他方法：
+                void write(char[] cbuf)
+                    写入字符数组。
+                abstract void write(char[] cbuf, int off, int len)
+                    写入字符数组的某一部分。
+                void write(String str)
+                    写入字符串。
+                void write(String str, int off, int len)
+                    写入字符串的某一部分。
+            字符流的续写和换行：
+                续写，追加写：使用两个参数构造方法：
+                    FileWriter(String fileName, boolean append)
+                        根据给定的文件名以及指示是否附加写入数据的 boolean 值来构造 FileWriter 对象。
+                    FileWriter(File file, boolean append)
+                        根据给定的 File 对象构造一个 FileWriter 对象。
+                    参数：
+                        String fileName，File file：写入数据的目的地；
+                        boolean append：续写开关：
+                            true：不会创建新的文件覆盖源文件，可以续写；
+                            false：会创建新的文件覆盖源文件。
+                换行：使用换行符号：
+                    windows：\r\n
+                    linux：/n
+                    mac：/r
+        5：TryCatch处理IO流异常：
+            在jdk1.7之前使用try catch finally 处理流中的异常
+                格式:
+                    try{
+                        可能会产出异常的代码
+                    }catch(异常类变量 变量名){
+                        异常的处理逻辑
+                    }finally{
+                        一定会指定的代码
+                        资源释放
+                    }
+            JDK7的新特性
+                在try的后边可以增加一个(),在括号中可以定义流对象
+                那么这个流对象的作用域就在try中有效
+                try中的代码执行完毕,会自动把流对象释放,不用写finally
+                格式:
+                    try(定义流对象;定义流对象....){
+                        可能会产出异常的代码
+                    }catch(异常类变量 变量名){
+                        异常的处理逻辑
+                    }
+            JDK9新特性
+                try的前边可以定义流对象
+                在try后边的()中可以直接引入流对象的名称(变量名)
+                在try代码执行完毕之后,流对象也可以释放掉,不用写finally
+                格式:
+                    A a = new A();
+                    B b = new B();
+                    try(a,b){
+                        可能会产出异常的代码
+                    }catch(异常类变量 变量名){
+                        异常的处理逻辑
+                    }
+    6.6 Properties集合
+        1：Properties类：
+             java.util.Properties集合 extends Hashtable<k,v> implements Map<k,v>
+                Properties 类表示了一个持久的属性集。Properties 可保存在流中或从流中加载。
+                Properties集合是一个唯一和IO流相结合的集合
+                    可以使用Properties集合中的方法store,把集合中的临时数据,持久化写入到硬盘中存储
+                    可以使用Properties集合中的方法load,把硬盘中保存的文件(键值对),读取到集合中使用
+                属性列表中每个键及其对应值都是一个字符串。
+                    Properties集合是一个双列集合,key和value默认都是字符串
+        2：使用Properties集合存储数据,遍历取出Properties集合中的数据：
+             Properties集合是一个双列集合,key和value默认都是字符串
+             Properties集合有一些操作字符串的特有方法：
+                Object setProperty(String key, String value)：
+                    调用 Hashtable 的方法 put。
+                String getProperty(String key)：
+                    通过key找到value值,此方法相当于Map集合中的get(key)方法
+                Set<String> stringPropertyNames()：
+                    返回此属性列表中的键集，其中该键及其对应值是字符串,此方法相当于Map集合中的keySet方法
+        3：可以使用Properties集合中的方法store,把集合中的临时数据,持久化写入到硬盘中存储：
+             void store(OutputStream out, String comments)
+             void store(Writer writer, String comments)
+                参数:
+                    OutputStream out:字节输出流,不能写入中文
+                    Writer writer:字符输出流,可以写中文
+                    String comments:注释,用来解释说明保存的文件是做什么用的
+                    不能使用中文,会产生乱码,默认是Unicode编码
+                    一般使用""空字符串
+                使用步骤:
+                    创建Properties集合对象,添加数据；
+                    创建字节输出流/字符输出流对象,构造方法中绑定要输出的目的地；
+                    使用Properties集合中的方法store,把集合中的临时数据,持久化写入到硬盘中存储；
+                    释放资源。
+        4：可以使用Properties集合中的方法load,把硬盘中保存的文件(键值对),读取到集合中使用：
+             void load(InputStream inStream)
+             void load(Reader reader)
+             参数:
+                InputStream inStream:
+                    字节输入流,不能读取含有中文的键值对
+                Reader reader:
+                    字符输入流,能读取含有中文的键值对
+                使用步骤:
+                    创建Properties集合对象
+                    使用Properties集合对象中的方法load读取保存键值对的文件
+                    遍历Properties集合
+                注意:
+                    存储键值对的文件中,键与值默认的连接符号可以使用=,空格(其他符号)
+                    存储键值对的文件中,可以使用#进行注释,被注释的键值对不会再被读取
+                    存储键值对的文件中,键与值默认都是字符串,不用再加引号
