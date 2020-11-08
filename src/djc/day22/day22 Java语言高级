@@ -1,0 +1,253 @@
+    6.7 缓冲流
+        1：缓冲流的原理：
+            在创建对象的时候，会创建一个内置的默认大小的缓冲区数组；
+            通过缓冲区读写，减少系统IO次数，从而提高读写的效率。
+        2：字节缓冲输出流：
+            java.io.BufferedOutputStream extends OutputStream
+            继承父类的共性成员方法：
+                void close()
+                    关闭此输出流并释放与此流有关的所有系统资源。
+                void flush()
+                    刷新此输出流并强制写出所有缓冲的输出字节。
+                void write(byte[] b)
+                    将 b.length 个字节从指定的 byte 数组写入此输出流。
+                void write(byte[] b, int off, int len)
+                    将指定 byte 数组中从偏移量 off 开始的 len 个字节写入此输出流。
+                abstract  void write(int b)
+                    将指定的字节写入此输出流。
+            构造方法：
+                BufferedOutputStream(OutputStream out)：
+                    创建一个新的缓冲输出流，以将数据写入指定的底层输出流。
+                BufferedOutputStream(OutputStream out, int size)：
+                    创建一个新的缓冲输出流，以将具有指定缓冲区大小的数据写入指定的底层输出流。
+                参数：
+                    OutputStream out：
+                        字节输出流；
+                        我们可以传递FileOutputStream，
+                        缓冲流会给FileOutputStream增加一个缓冲区，提高FileOutputStream的写入效率。
+                    int size：
+                        指定缓冲流内部缓冲区大小，不写指定默认的大小。
+            使用步骤：
+                创建一个字节输出流FileOutputStream对象，构造方法中绑定要输出的目的地；
+                创建BufferedOutputStream，构造方法中传递FileOutputStream对象，提高FileOutputStream对象效率；
+                使用BufferedOutputStream对象中的方法write，把数据写入到内部的缓冲区中；
+                使用BufferedOutputStream对象中的方法flush，把内部缓冲区中的数据，刷新到文件中；
+                释放资源（会先调用flush方法刷新数据，第4步可以省略）。
+        3：字节缓冲输入流：
+            java.io.BufferedInputStream extends InputStream
+            继承父类的共性成员方法：
+                void close()
+                    关闭此输入流并释放与此流有关的所有系统资源。
+                void read()
+                    从输入流中读取数据的下一个字节。
+                void read(byte[] b)
+                    将从输入流中读取一定数量的字节，并将其存储在缓冲区数组b中。
+            构造方法：
+                BufferedInputStream(InputStream in)
+                    创建一个 BufferedInputStream 并保存其参数，即输入流 in，以便将来使用。
+                BufferedInputStream(InputStream in, int size)
+                    创建具有指定缓冲区大小的 BufferedInputStream 并保存其参数，即输入流 in，以便将来使用。
+                参数：
+                    InputStream in：
+                        字节输入流；
+                        我们可以传递FileInputStream，
+                        缓冲流会给FileInputStream增加一个缓冲区，提高FileInputStream的读取效率。
+                    int size：
+                        指定缓冲流内部缓冲区大小，不写指定默认的大小。
+            使用步骤：
+                创建一个字节输入流FileInputStream对象，构造方法中绑定要读取的数据源；
+                创建BufferedInputStream，构造方法中传递FileInputStream对象，提高FileInputStream对象效率；
+                使用BufferedInputStream对象中的方法read，读取文件；
+                释放资源。
+        4：字符缓冲输出流：
+            java.io.BufferedWriter extends Writer
+            继承自父类的共性成员方法：
+                void write(int c)：
+                    写入单个字符。
+                void write(char[] cbuf)：
+                    写入字符数组。
+                abstract void write(char[] cbuf, int off, int len)：
+                    写入字符数组的某一部分，off数组的开始索引，len写的字符个数。
+                void write(String str)：
+                    写入字符串。
+                void write(String str, int off, int len)：
+                    写入字符串的某一部分，off字符串的开始索引，len写的字符个数。
+                void flush()：
+                    刷新该流的缓冲。
+                void close()：
+                    关闭此流，但要先刷新它。
+            构造方法：
+                BufferedWriter(Writer out)
+                    创建一个使用默认大小输出缓冲区的缓冲字符输出流。
+                BufferedWriter(Writer out, int sz)
+                    创建一个使用给定大小输出缓冲区的新缓冲字符输出流。
+                参数：
+                    Writer out：
+                        字符输出流；
+                        我们可以传递FileWriter，缓冲流会给FileWriter增加一个缓冲区，提高FileWriter的写入效率。
+                    int sz：
+                        指定缓冲区大小，不写默认大小
+            特有的成员方法：
+                void newLine()
+                    写入一个行分隔符；
+                    会根据不同的操作系统，获取不同的行分隔符。
+            使用步骤：
+                创建字符缓冲输出流对象，构造方法中传递字符输出流；
+                调用字符缓冲输出流对象的方法write，把数据写入到内存缓冲区中；
+                调用字符缓冲输出流对象中的flush方法，把内存缓冲区的数据刷新到文件中；
+                释放资源。
+        5：字符缓冲输入流：
+            java.io.BufferedReader extends Reader
+            继承自父类的共性成员方法：
+                int read()：
+                    读取单个字符并返回。
+                int read(char[] cbuf)：
+                    一次读取多个字符，将字符读入数组。
+                void close()：
+                    关闭此流并释放与之关联的所有资源。
+            构造方法：
+                BufferedReader (Reader  in)
+                    创建一个使用默认大小输入缓冲区的缓冲字符输入流。
+                BufferedReader (Reader in, int sz)
+                    创建一个使用给定大小输入缓冲区的新缓冲字符输入流。
+                参数：
+                    Reader  in：
+                        字符输入流；
+                        我们可以传递FileReader，缓冲流会给FileReader增加一个缓冲区，提高FileReader的读取效率。
+                    int sz：
+                        指定缓冲区大小，不写默认大小
+            特有的成员方法：
+                String readLine()
+                    读取一个文本行。
+                    行的终止符号：
+                        通过下列字符之一即可认为某行已终止：换行 ('\n')、回车 ('\r') 或回车后直接跟着换行。
+                    返回值：
+                        包含该行内容的字符串，不包含任何行终止符，如果已到达流末尾，则返回 null。
+            使用步骤：
+                创建字符缓冲输入流对象，构造方法中传递字符输入流；
+                调用字符缓冲输入流对象中的方法read/readLine,读取文本；
+                释放资源。
+    6.8 转换流
+        1：字符编码和字符集：
+            编码：字符-->字节；
+            解码：字节-->字符；
+            字符编码：
+                是一套自然语言的字符与二进制数之间的对应规则；
+                编码表：生活中文字和计算机中二进制的对应规则。
+            字符集：
+                也叫编码表。是一个系统支持的所有字符的集合，包括个国家文字、标点符号、图形符号、数字等。
+        2：OutputStreamWriter：
+            java.io.OutputStreamWriter extends Writer：
+                是字符流通向字节流的桥梁：可使用指定的 charset 将要写入流中的字符编码成字节（编码）。
+            构造方法：
+                OutputStreamWriter(OutputStream out)
+                    创建使用默认字符编码的 OutputStreamWriter。
+                OutputStreamWriter(OutputStream out, String charsetName)
+                    创建使用指定字符集的 OutputStreamWriter。
+                参数：
+                    OutputStream out：
+                        字节输出流；
+                        可以用来写转换之后的字节到文件当中。
+                    String charsetName：
+                        指定的编码表名称，不区分大小写，不指定默认使用uft-8。
+            使用步骤：
+                创建OutputStreamWriter对象，构造方法中传递字节输出流和指定的编码表名称；
+                使用OutputStreamWriter对象中的方法write，把字符转换为字节存储到缓冲区中；
+                使用OutputStreamWriter对象中的方法flush，把内存缓冲区中的字节刷新到文件中；
+                释放资源。
+        3：InputStreamReader：
+            java.io.InputStreamReader extends Reader：
+                是字节流通向字符流的桥梁：它使用指定的 charset 读取字节并将其解码为字（解码）。
+            构造方法：
+                InputStreamReader(InputStream in)
+                    创建一个使用默认字符集的 InputStreamReader。
+                InputStreamReader(InputStream in, String charsetName)
+                    创建使用指定字符集的 InputStreamReader。
+                参数：
+                    InputStream in：
+                        字节输入流；
+                        可以用来读取文件中存储的字节。
+                    String charsetName：
+                        指定的编码表名称，不区分大小写，不指定默认使用uft-8。
+            使用步骤：
+                创建InputStreamReader对象，构造方法中传递字节输入流和指定的编码表名称；
+                使用InputStreamReader对象中的方法read，读取文件中的文件；
+                释放资源。
+            注意事项：
+                构造方法中指定的编码表名称要和文件的编码相同；
+                否则会发生乱码。
+    6.9 序列化流：
+        1：概述：
+            序列化：
+                把对象以流的方式，写入到文件中保存，叫写对象，也叫对象的序列化；
+                对象中包含的不仅仅是字符，所以使用字节流；
+                ObjectOutputStream：对象的序列化流。
+            反序列化：
+                把文件中保存的对象，以流的方式读取出来，叫做读对象，也叫对象的反序列化；
+                读取的文件保存的都是字节，所以使用字节流；
+                ObjectInputStream：对象的反序列化流。
+        2：序列化流：
+            java.io.ObjectOutputStream extends OutputStream：
+                将 Java 对象的基本数据类型和图形写入 OutputStream。
+            作用：
+                把对象以流的方式写入到文件中保存。
+            构造方法：
+                ObjectOutputStream(OutputStream out)
+                    创建写入指定 OutputStream 的 ObjectOutputStream。
+                参数：
+                    OutputStream out：
+                        字节输出流。
+            特有的成员方法：
+                void writeObject(Object obj)
+                    将指定的对象写入 ObjectOutputStream。
+            使用步骤：
+                创建ObjectOutputStream对象，构造方法中传递字节输出流；
+                使用ObjectOutputStream对象中的方法writeObject，把对象写入到文件中；
+                资源释放。
+        3：反序列流：
+            java.io.ObjectInputStream extends InputStream：
+                对以前使用 ObjectOutputStream 写入的基本数据和对象进行反序列化。
+            作用：
+                把文件中保存的对象，以流的方式读取出来使用。
+            构造方法：
+                ObjectInputStream(InputStream in)
+                    创建从指定 InputStream 读取的 ObjectInputStream。
+                参数：
+                    InputStream in：
+                        字节输入流。
+            特有的成员方法：
+                Object readObject()
+                    从 ObjectInputStream 读取对象。
+            使用步骤：
+                创建ObjectInputStream对象，构造方法中传递字节输入流；
+                使用ObjectInputStream对象中的方法readObject，读取保存对象的文件；
+                释放资源；
+                使用一下读取出来的对象（打印）。
+            注意事项：
+                readObject方法声明抛出了ClassNotFoundException异常(class文件找不到异常)
+                当不存在对象的class文件时抛出异常；
+                反序列化前提：
+                    类必须实现Serializable接口；
+                    必须存在类对应的class文件。
+        4：transient关键字_瞬态关键字：
+            被transient关键字修饰的成员变量，不能被序列化。
+    6.10 打印流：
+        1：java.io.PrintStream：
+            PrintStream 为其他输出流添加了功能，使它们能够方便地打印各种数据值表示形式。
+            特点：
+                只负责数据的输出，不负责数据的读取；
+                与其他输出流不同，PrintStream 永远不会抛出 IOException；
+                有特有的方法，print，println。
+            构造方法：
+                PrintStream(File file)
+                    创建具有指定文件且不带自动行刷新的新打印流。
+                    输出的目的地是一个文件。
+                PrintStream(OutputStream out)
+                    创建新的打印流。
+                    输出的目的地是一个字节输出流。
+                PrintStream(String fileName)
+                    创建具有指定文件名称且不带自动行刷新的新打印流。
+                    输出的目的地是一个文件路径。
+            注意事项：
+                如果使用继承自父类的write方法写数据，那么查看数据的时候会查询编码表；
+                如果使用自己特有的方法print/println方法写数据，写的数据原样输出
