@@ -27,7 +27,7 @@ import java.util.Random;
         9.使用网络字节输出流OutputStream对象中的方法write,给客户端回写"上传成功"
         10.释放资源(FileOutputStream,Socket,ServerSocket)
  */
-public class Demo02TCPServer {
+public class Demo02TCPServer { //文件上传服务器端
     public static void main(String[] args) throws IOException {
         //1.创建一个服务器ServerSocket对象,和系统要指定的端口号
         ServerSocket server = new ServerSocket(8888);

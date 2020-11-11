@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Demo01TCPServer {
+public class Demo01TCPServer { //TCP通信服务器端
     public static void main(String[] args) throws IOException {
         //创建服务器ServerSocket对象和系统要指定的端口号
         ServerSocket serverSocket = new ServerSocket(8888);

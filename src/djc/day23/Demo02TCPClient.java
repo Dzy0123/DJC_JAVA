@@ -23,7 +23,7 @@ import java.net.Socket;
         7.使用网络字节输入流InputStream对象中的方法read读取服务回写的数据
         8.释放资源(FileInputStream,Socket)
  */
-public class Demo02TCPClient {
+public class Demo02TCPClient { //文件上传客户端
     public static void main(String[] args) throws IOException {
         //1.创建一个本地字节输入流FileInputStream对象,构造方法中绑定要读取的数据源
         FileInputStream fis = new FileInputStream("c:\\1.jpg");
